@@ -4,7 +4,9 @@ const pool    = require('./db');
 const app  = express();
 const port = 8080;
 
+const path    = require('path');
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 /* ---------- Mount the three routes ---------- */
 app.use('/api/dogs',         require('./routes/dogs'));
