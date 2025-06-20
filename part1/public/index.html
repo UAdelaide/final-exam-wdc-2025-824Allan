@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dog-of-the-Day</title>
+
+  <style>
+    body{
+      background:#ffeaea;
+      font-family:"Comic Sans MS",cursive,sans-serif;
+      color:#ff7b7b;
+      text-align:center;
+      margin:0;
+    }
+    h1{font-size:48px;margin:10px 0 5px;}
+    p {font-size:10px; margin:0 0 15px; line-height:1;}
+    button{
+      background:linear-gradient(45deg,#f0adff,#7bedff);
+      border:none;border-radius:50%;
+      width:28px;height:28px;cursor:pointer;
+    }
+    img{width:60%;border:8px dotted #ff7b7b;margin-top:8px;}
+  </style>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Dog of the Day</h1>
+    <img :src="dogUrl" />
+    <p>{{ description }}</p>
+    <button @click="getDog"></button>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      data(){return{
+        dogUrl:'',
+        description:'This is the most adorable dog you have ever seen in your life!!! Click the tiny button above to see another one right away!!!'
+      }},
+      mounted(){this.getDog();},
+      methods:{
+        async getDog(){
+          const res = await fetch('https://dog.ceo/api/breeds/image/random');
+          const { message } = await res.json();
+          this.dogUrl = message;
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
