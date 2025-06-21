@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
 
     const user = rows[0];
 
-    // 2. 简单比对密码（
+    // Simple password comparison
     if (password !== user.password_hash) {
       return res.redirect('/index.html?error=1');
     }
