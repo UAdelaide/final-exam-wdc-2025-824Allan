@@ -24,6 +24,7 @@ const authRoutes = require('./routes/authRoutes');
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 app.use('/',          authRoutes);
+app.use('/api', userRoutes);
 
 // Export the app instead of listening here
 module.exports = app;
