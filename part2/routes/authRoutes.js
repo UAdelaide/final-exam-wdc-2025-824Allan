@@ -10,6 +10,7 @@ router.post('/login', async(req,res) => {
         const [rows] = await pool.query(
             'SELECT * FROM User WHERE username = ?', [username]
         );
-        
+
+        if ()
     }
 })
