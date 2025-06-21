@@ -7,7 +7,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded)
+app.use(express.urlencoded({wxtended:false}))
 
 app.use(express.static(path.join(__dirname, '/public')));
 
