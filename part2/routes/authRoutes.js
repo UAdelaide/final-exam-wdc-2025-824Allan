@@ -15,6 +15,8 @@ router.post('/login', async(req,res) => {
             return res.redirect('/index.html?error=1'); // Simple failure handling
         }
 
-        const user = rows[0]
+        const user = rows[0];
+
+        
     }
 })
