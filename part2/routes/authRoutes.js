@@ -17,7 +17,7 @@ router.post('/login', async(req,res) => {
 
         const user = rows[0];
         // Save session
-        req.session.user =
+        req.session.user = { id: user.user_id, role}
 
     }
 })
