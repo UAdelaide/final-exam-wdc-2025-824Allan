@@ -34,4 +34,4 @@ router.get('/logout', (req, res) => {
     req.session.destroy(() => res.redirect('/index.html'));
   });
 
-  
+  module.exports = router;
