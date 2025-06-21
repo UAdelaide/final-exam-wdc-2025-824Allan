@@ -6,7 +6,7 @@ const pool    = require('../models/db');
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
-    // 1. 查找用户
+    // Search for users
     const [rows] = await pool.query(
       'SELECT user_id, role, password_hash FROM Users WHERE username = ?',
       [username]
