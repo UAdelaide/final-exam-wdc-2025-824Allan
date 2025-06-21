@@ -30,6 +30,7 @@ router.post('/login', async(req,res) => {
     }
 });
 
+/* Log out */
 router.get('/logout', (req, res) => {
     req.session.destroy(() => res.redirect('/index.html'));
   });
