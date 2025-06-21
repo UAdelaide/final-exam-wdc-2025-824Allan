@@ -11,6 +11,6 @@ router.post('/login', async(req,res) => {
             'SELECT * FROM User WHERE username = ?', [username]
         );
 
-        if ()
+        if (!rows.length )
     }
 })
