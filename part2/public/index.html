@@ -49,31 +49,31 @@
     <!-- login form END -->
 
     <!-- Dog table BEGIN -->
-  <div id="dog-table" class="mt-5">
-    <h2>All Registered Dogs</h2>
-    <table v-if="dogs.length" class="table table-bordered mt-3">
-      <thead>
-        <tr>
-          <th>Dog ID</th>
-          <th>Name</th>
-          <th>Size</th>
-          <th>Owner ID</th>
-          <th>Photo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="dog in dogs" :key="dog.dog_id">
-          <td>{{ dog.dog_id }}</td>
-          <td>{{ dog.name }}</td>
-          <td>{{ dog.size }}</td>
-          <td>{{ dog.owner_id }}</td>
-          <td><img :src="dog.photo" style="width: 100px;" /></td>
-        </tr>
-      </tbody>
-    </table>
-    <p v-else>Loading dog list...</p>
-  </div>
-  <!-- Dog table END -->
+    <div id="dog-table" class="mt-5">
+      <h2>All Registered Dogs</h2>
+      <table v-if="dogs.length" class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Dog ID</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Owner ID</th>
+            <th>Photo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="dog in dogs" :key="dog.dog_id">
+            <td>{{ dog.dog_id }}</td>
+            <td>{{ dog.name }}</td>
+            <td>{{ dog.size }}</td>
+            <td>{{ dog.owner_id }}</td>
+            <td><img :src="dog.photo" style="width: 100px;" /></td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-else>Loading dog list...</p>
+    </div>
+    <!-- Dog table END -->
 
   </div>
 
