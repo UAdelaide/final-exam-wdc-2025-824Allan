@@ -130,7 +130,6 @@
             message.value = '';
           }
         }
-        // ✅ 加在 Vue setup() 内部，用于加载狗狗列表
         async function loadDogs() {
           try {
             const res = await fetch('/api/my-dogs');
