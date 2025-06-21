@@ -29,3 +29,9 @@ router.post('/login', async(req,res) => {
         res.status(500).send('Server error');
     }
 });
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => res.redirect('/index.html'));
+  });
+
+  
