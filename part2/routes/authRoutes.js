@@ -3,4 +3,4 @@ const router = express.Router();
 const pool = require('../models/db');
 
 /* ----- POST /login ----- */
-router。
+router.post('/login')
