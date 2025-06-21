@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
       return res.redirect('/index.html?error=1');
     }
 
-    // 3. 登录成功 -> 写 session
+    // Login successful -> Write session
     req.session.user = { id: user.user_id, role: user.role };
 
     // Redirect by role
