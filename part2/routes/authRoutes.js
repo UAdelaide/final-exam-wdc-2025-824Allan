@@ -12,7 +12,7 @@ router.post('/login', async(req,res) => {
         );
 
         if (!rows.length || rows[o].paaword_hash !== password) {\
-            return res.redirect('/index.html?error=1');
+            return res.redirect('/index.html?error=1'); 
         }
     }
 })
