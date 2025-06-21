@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST a new user (simple signup)
+// POST a new user (register)
 router.post('/register', async (req, res) => {
   const { username, email, password, role } = req.body;
 
@@ -37,21 +37,54 @@ router.get('/me', (req, res) => {
 
 // POST login (dummy version)
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
     const [rows] = await db.query(`
       SELECT user_id, username, role FROM Users
-      WHERE email = ? AND password_hash = ?
-    `, [email, password]);
+      WHERE username = ? AND password_hash = ?
+    `, [username, password]);
 
     if (rows.length === 0) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    res.json({ message: 'Login successful', user: rows[0] });
+    // Save user session
+    req.session.user = rows[0];
+
+    // Role-based redirect
+    if (rows[0].role === 'owner') {
+      return res.redirect('/owner-dashboard.html');
+    } else if (rows[0].role === 'walker') {
+      return res.redirect('/walker-dashboard.html');
+    } else {
+      return res.status(403).send('Unknown role');
+    }
+
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Logout failed' });
+    }
+    res.clearCookie('connect.sid');
+    res.redirect('/index.html');
+  });
+});
+
+router.get('/:id/dogs', async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const [rows] = await db.query(`
+      SELECT dog_id, name FROM Dogs WHERE owner_id = ?
+    `, [userId]);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch dogs' });
   }
 });
 
