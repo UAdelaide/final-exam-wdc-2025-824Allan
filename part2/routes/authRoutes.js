@@ -11,6 +11,6 @@ router.post('/login', async(req,res) => {
             'SELECT * FROM User WHERE username = ?', [username]
         );
 
-        if (!rows.length )
+        if (!rows.length || rows[o].paaword_hash )
     }
 })
