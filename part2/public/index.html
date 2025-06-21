@@ -51,7 +51,7 @@
           const dogs = Vue.ref([]);
 
           async function fetchDogs() {
-            const res = await fetch('/api/api/dogs');
+            const res = await fetch('/api/dogs');
             const data = await res.json();
 
             const dogsWithPhotos = await Promise.all(
