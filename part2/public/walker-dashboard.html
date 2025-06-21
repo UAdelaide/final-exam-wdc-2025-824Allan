@@ -61,6 +61,17 @@
             error.value = err.message;
           }
         }
+        async function getCurrentUser() {
+          try {
+            const res = await fetch('/api/users/me');
+            if (!res.ok) throw new Error('Failed to fetch user');
+            const data = await res.json();
+            user.value = data.user_id; // Set the current user ID
+          } catch (err) {
+            error.value = err.message;
+          }
+        }
+
 
         async function applyToWalk(requestId) {
           try {
