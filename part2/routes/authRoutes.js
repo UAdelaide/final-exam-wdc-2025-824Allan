@@ -37,4 +37,17 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
+// Added logout route to destroy session and redirect to login page
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+      if (err) {
+        console.error('Logout error:', err);
+        return res.status(500).send('Logout failed');
+      }
+      res.clearCookie('connect.sid');   // Clear session cookie
+      res.redirect('/index.html');      // Return to login form
+    });
+  });
+
 module.exports = router;
