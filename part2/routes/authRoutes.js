@@ -23,6 +23,6 @@ router.post('/login', async(req,res) => {
         if (user.role === 'owner')  return res.redirect('/owner-dashboard.html');
         if (user.role === 'walker') return res.redirect('/walker-dashboard.html');
 
-        res.redirect('/index.html')
-    }
+        res.redirect('/index.html');
+    } catch
 })
