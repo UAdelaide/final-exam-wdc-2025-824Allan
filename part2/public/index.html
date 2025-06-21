@@ -31,13 +31,12 @@
     </form>
 
     <script>
-      // 登录失败时，后端重定向到 /index.html?error=1
+      // When login fails, the backend redirects to /index.html?error=1.
       if (location.search.includes("error=1")) {
         document.getElementById("loginErr").textContent =
           "Invalid username or password";
       }
 
-      // Vue 标题
       const { createApp } = Vue;
       createApp({
         data() {
