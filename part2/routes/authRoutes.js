@@ -1,10 +1,10 @@
 const express = require('express');
 const router  = express.Router();
-const pool    = require('../models/db');   // 跟现有 userRoutes 使用同一路径
+const pool    = require('../models/db');
 
 // POST /login
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;      // 表单字段名必须是这两个
+  const { username, password } = req.body;
   try {
     // 1. 查找用户
     const [rows] = await pool.query(
@@ -17,7 +17,7 @@ router.post('/login', async (req, res) => {
 
     const user = rows[0];
 
-    // 2. 简单比对密码（考试无需加密比对）
+    // 2. 简单比对密码（
     if (password !== user.password_hash) {
       return res.redirect('/index.html?error=1');
     }
