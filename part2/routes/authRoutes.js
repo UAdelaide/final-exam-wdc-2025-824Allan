@@ -1,38 +1,40 @@
 const express = require('express');
-const router = express.Router();
-const pool = require('../models/db');
+const router  = express.Router();
+const pool    = require('../models/db');   // 跟现有 userRoutes 使用同一路径
 
-/* ----- POST /login ----- */
-router.post('/login', async(req,res) => {
-    const {username, password} = req.body;
-
-    try{
-        const [rows] = await pool.query(
-            'SELECT * FROM User WHERE username = ?', [username]
-        );
-
-        if (!rows.length || rows[o].paaword_hash !== password) {
-            return res.redirect('/index.html?error=1'); // Simple failure handling
-        }
-
-        const user = rows[0];
-        // Save session
-        req.session.user = { id: user.user_id, role: user.role, username};
-
-        // Jump by role
-        if (user.role === 'owner')  return res.redirect('/owner-dashboard.html');
-        if (user.role === 'walker') return res.redirect('/walker-dashboard.html');
-
-        res.redirect('/index.html');
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
+// POST /login
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;      // 表单字段名必须是这两个
+  try {
+    // 1. 查找用户
+    const [rows] = await pool.query(
+      'SELECT user_id, role, password_hash FROM Users WHERE username = ?',
+      [username]
+    );
+    if (!rows.length) {
+      return res.redirect('/index.html?error=1');
     }
+
+    const user = rows[0];
+
+    // 2. 简单比对密码（考试无需加密比对）
+    if (password !== user.password_hash) {
+      return res.redirect('/index.html?error=1');
+    }
+
+    // 3. 登录成功 -> 写 session
+    req.session.user = { id: user.user_id, role: user.role };
+
+    // 4. 按角色重定向
+    if (user.role === 'owner') {
+      return res.redirect('/owner-dashboard.html');
+    } else {
+      return res.redirect('/walker-dashboard.html');
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    return res.status(500).send('Server error');
+  }
 });
 
-/* Log out */
-router.get('/logout', (req, res) => {
-    req.session.destroy(() => res.redirect('/index.html'));
-  });
-
-  module.exports = router;
+module.exports = router;
