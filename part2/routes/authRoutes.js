@@ -19,7 +19,9 @@ router.post('/login', async(req,res) => {
         // Save session
         req.session.user = { id: user.user_id, role: user.role, username};
 
-        
+        // Jump by role
+        if (user.role === 'owner')  return res.redirect('/owner-dashboard.html');
+    if (user.role === 'walker') return res.redirect('/walker-dashboard.html');
 
     }
 })
