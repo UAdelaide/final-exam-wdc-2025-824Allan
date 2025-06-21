@@ -16,7 +16,8 @@ router.post('/login', async(req,res) => {
         }
 
         const user = rows[0];
+        // Save session
+        req.session.user =
 
-        
     }
 })
