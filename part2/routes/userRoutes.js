@@ -55,6 +55,27 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// ✅ New route: Get list of dogs for the logged-in owner
+router.get('/my-dogs', async (req, res) => {
+  const user = req.session.user;
+
+  // ✅ 1. Check login & role
+  if (!user || user.role !== 'owner') {
+    return res.status(403).json({ error: 'Access denied' });
+  }
+
+  try {
+    // ✅ 2. Query all dogs owned by this user
+    const [rows] = await db.query(
+      'SELECT dog_id, name FROM Dogs WHERE owner_id = ?',
+      [user.id]
+    );
+    res.json(rows); // ✅ Return dog_id and name
+  } catch (error) {
+    console.error('Failed to fetch dogs:', error);
+    res.status(500).json({ error: 'Failed to load dogs' });
+  }
+});
 
 
 module.exports = router;
