@@ -9,7 +9,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({wxtended:false}));   // Parsing the form
 app.use(session({
-    secret: 'dogwalk-secret'
+    secret: 'dogwalk-secret',
+
 }))
 
 app.use(express.static(path.join(__dirname, '/public')));
