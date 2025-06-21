@@ -47,28 +47,28 @@
       }).mount("#app");
 
       createApp({
-  setup() {
-    const dogs = Vue.ref([]);
+        setup() {
+          const dogs = Vue.ref([]);
 
-    async function fetchDogs() {
-      const res = await fetch('/api/dogs');
-      const data = await res.json();
+          async function fetchDogs() {
+            const res = await fetch('/api/dogs');
+            const data = await res.json();
 
-      const dogsWithPhotos = await Promise.all(
-        data.map(async (dog) => {
-          const img = await fetch("https://dog.ceo/api/breeds/image/random");
-          const imgJson = await img.json();
-          return { ...dog, photo: imgJson.message };
-        })
-      );
+            const dogsWithPhotos = await Promise.all(
+              data.map(async (dog) => {
+                const img = await fetch("https://dog.ceo/api/breeds/image/random");
+                const imgJson = await img.json();
+                return { ...dog, photo: imgJson.message };
+              })
+            );
 
-      dogs.value = dogsWithPhotos;
-    }
+            dogs.value = dogsWithPhotos;
+          }
 
-    Vue.onMounted(fetchDogs);
-    return { dogs };
-  }
-}).mount("#dog-table");
+          Vue.onMounted(fetchDogs);
+          return { dogs };
+        }
+      }).mount("#dog-table");
 
 
     </script>
