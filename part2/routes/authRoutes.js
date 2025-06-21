@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
     // 3. 登录成功 -> 写 session
     req.session.user = { id: user.user_id, role: user.role };
 
-    // 4. 按角色重定向
+    // Redirect by role
     if (user.role === 'owner') {
       return res.redirect('/owner-dashboard.html');
     } else {
