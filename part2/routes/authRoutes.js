@@ -26,6 +26,6 @@ router.post('/login', async(req,res) => {
         res.redirect('/index.html');
     } catch (err) {
         console.error(err);
-        res.status(500).send('Se')
+        res.status(500).send('Server error');
     }
-})
+});
