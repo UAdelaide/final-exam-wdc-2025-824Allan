@@ -4,37 +4,45 @@ const pool    = require('../models/db');   // 跟现有 userRoutes 使用同一�
 
 // POST /login
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;      // 表单字段名必须是这两个
-  try {
-    // 1. 查找用户
-    const [rows] = await pool.query(
-      'SELECT user_id, role, password_hash FROM Users WHERE username = ?',
-      [username]
-    );
-    if (!rows.length) {
-      return res.redirect('/index.html?error=1');
+    const { username, password } = req.body;
+    console.log('[1] Login attempt:', username, password); // 第一步打印用户名密码
+    try {
+      const [rows] = await pool.query(
+        'SELECT user_id, role, password_hash FROM Users WHERE username = ?',
+        [username]
+      );
+      console.log('[2] Query result:', rows); // 第二步打印查询结果
+
+      if (!rows.length) {
+        console.log('[3] User not found');
+        return res.redirect('/index.html?error=1');
+      }
+
+      const user = rows[0];
+      if (password !== user.password_hash) {
+        console.log('[4] Wrong password');
+        return res.redirect('/index.html?error=1');
+      }
+
+      console.log('[5] Login success. User role:', user.role);
+
+      // 测试 session 是否可用
+      req.session.user = { id: user.user_id, role: user.role };
+      console.log('[6] Session object after set:', req.session);
+
+      // Redirect
+      if (user.role === 'owner') {
+        console.log('[7] Redirecting to /owner-dashboard.html');
+        return res.redirect('/owner-dashboard.html');
+      } else {
+        console.log('[7] Redirecting to /walker-dashboard.html');
+        return res.redirect('/walker-dashboard.html');
+      }
+
+    } catch (err) {
+      console.error('Login error:', err);
+      return res.status(500).send('Server error');
     }
-
-    const user = rows[0];
-
-    // 2. 简单比对密码（考试无需加密比对）
-    if (password !== user.password_hash) {
-      return res.redirect('/index.html?error=1');
-    }
-
-    // 3. 登录成功 -> 写 session
-    req.session.user = { id: user.user_id, role: user.role };
-
-    // 4. 按角色重定向
-    if (user.role === 'owner') {
-      return res.redirect('/owner-dashboard.html');
-    } else {
-      return res.redirect('/walker-dashboard.html');
-    }
-  } catch (err) {
-    console.error('Login error:', err);
-    return res.status(500).send('Server error');
-  }
-});
+  });
 
 module.exports = router;
