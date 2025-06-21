@@ -11,8 +11,8 @@ router.post('/login', async(req,res) => {
             'SELECT * FROM User WHERE username = ?', [username]
         );
 
-        if (!rows.length || rows[o].paaword_hash !== password) {\
-            return res.redirect('/index.html?error=1'); 
+        if (!rows.length || rows[o].paaword_hash !== password) {
+            return res.redirect('/index.html?error=1'); // Simple failure handling
         }
     }
 })
