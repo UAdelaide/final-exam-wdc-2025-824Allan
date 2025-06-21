@@ -19,37 +19,37 @@
 
 
 
-<!-- 登录表单 BEGIN -->
-<form action="/login" method="POST"
-      class="mx-auto p-4 my-4 border rounded-3 shadow-sm"
-      style="max-width: 420px;">
+  <!-- 登录表单 BEGIN -->
+  <form action="/login" method="POST"
+        class="mx-auto p-4 my-4 border rounded-3 shadow-sm"
+        style="max-width: 420px;">
 
-  <div class="mb-3">
-    <label for="username" class="form-label fw-semibold">Username</label>
-    <input id="username" name="username" class="form-control" required>
-  </div>
+    <div class="mb-3">
+      <label for="username" class="form-label fw-semibold">Username</label>
+      <input id="username" name="username" class="form-control" required>
+    </div>
 
-  <div class="mb-3">
-    <label for="password" class="form-label fw-semibold">Password</label>
-    <input id="password" name="password" type="password" class="form-control" required>
-  </div>
+    <div class="mb-3">
+      <label for="password" class="form-label fw-semibold">Password</label>
+      <input id="password" name="password" type="password" class="form-control" required>
+    </div>
 
-  <button type="submit" class="btn btn-primary w-auto px-4">
-    Log In
-  </button>
+    <button type="submit" class="btn btn-primary w-auto px-4">
+      Log In
+    </button>
 
-  <!-- 登录失败提示 -->
-  <p id="loginErr" class="text-danger fw-bold mt-3 mb-0"></p>
-</form>
+    <!-- 登录失败提示 -->
+    <p id="loginErr" class="text-danger fw-bold mt-3 mb-0"></p>
+  </form>
 
-<script>
-  // 如果后端重定向回来带 ?error=1
-  if (location.search.includes('error=1')) {
-    document.getElementById('loginErr').textContent =
-      'Invalid username or password';
-  }
-</script>
-<!-- 登录表单 END -->
+  <script>
+    // 如果后端重定向回来带 ?error=1
+    if (location.search.includes('error=1')) {
+      document.getElementById('loginErr').textContent =
+        'Invalid username or password';
+    }
+  </script>
+  <!-- 登录表单 END -->
 
 
 
