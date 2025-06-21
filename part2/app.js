@@ -12,13 +12,14 @@ app.use(session({
     secret: 'dogwalk-secret',
     resave: false,
     saveUninitialized: false
-}))
+}));
 
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
+const au
 
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
