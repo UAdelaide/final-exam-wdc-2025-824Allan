@@ -1,29 +1,28 @@
-const express = require('express');
-const path = require('path');
-const session = require('express-session');
-require('dotenv').config();
+const express  = require('express');
+const session  = require('express-session');
+const path     = require('path');
 
 const app = express();
 
-// Middleware
+// ① 解析表单
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({wxtended:false}));   // Parsing the form
-app.use(session({
+
+// ② session（一定要在路由之前）
+app.use(
+  session({
     secret: 'dogwalk-secret',
     resave: false,
-    saveUninitialized: false
-}));
+    saveUninitialized: false,
+  })
+);
 
-app.use(express.static(path.join(__dirname, '/public')));
+// ③ 静态文件
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-const walkRoutes = require('./routes/walkRoutes');
-const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes');
+// ④ 路由
+app.use('/', require('./routes/authRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/walks', require('./routes/walkRoutes'));
 
-app.use('/api/walks', walkRoutes);
-app.use('/api/users', userRoutes);
-app.use('/',          authRoutes);
-
-// Export the app instead of listening here
-module.exports = app;
+module.exports = app;   // 你之前就是导出 app，保留即可
