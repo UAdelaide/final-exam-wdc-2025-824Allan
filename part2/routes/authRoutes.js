@@ -4,5 +4,9 @@ const pool = require('../models/db');
 
 /* ----- POST /login ----- */
 router.post('/login', async(req,res) => {
-    const {username, password} = req.aborted;
+    const {username, password} = req.body;
+
+    try{
+        
+    }
 })
