@@ -11,7 +11,7 @@ app.use(express.urlencoded({wxtended:false}));   // Parsing the form
 app.use(session({
     secret: 'dogwalk-secret',
     resave: false,
-    sav
+    saveUninitialized: false
 }))
 
 app.use(express.static(path.join(__dirname, '/public')));
