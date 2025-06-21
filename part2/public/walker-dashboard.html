@@ -92,7 +92,7 @@
           }
         }
 
-        onMounted(() => {
+        onMounted(async() => {
           await getCurrentUser();      // fetch current user ID first
           await loadWalkRequests();    // then load walks
         });
