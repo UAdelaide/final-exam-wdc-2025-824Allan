@@ -55,17 +55,17 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// ✅ New route: Get list of dogs for the logged-in owner
+//  New route: Get list of dogs for the logged-in owner
 router.get('/my-dogs', async (req, res) => {
   const user = req.session.user;
 
-  // ✅ 1. Check login & role
+  // Check login & role
   if (!user || user.role !== 'owner') {
     return res.status(403).json({ error: 'Access denied' });
   }
 
   try {
-    // ✅ 2. Query all dogs owned by this user
+    // Query all dogs owned by this user
     const [rows] = await db.query(
       'SELECT dog_id, name FROM Dogs WHERE owner_id = ?',
       [user.id]
